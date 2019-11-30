@@ -13,6 +13,7 @@ urlpatterns = [
     path('search/', views.search_business, name="search"),
     path('profile/', views.profile, name='profile'),
     path('updateprofile/', views.updateprofile, name='updateprofile'),
+    path('post/', views.poststory, name='poststory'),
 
 ]
 if settings.DEBUG:
