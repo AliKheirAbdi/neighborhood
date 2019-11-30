@@ -21,3 +21,9 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['name', 'neighborhood']
+
+class StoryForm(forms.ModelForm):
+
+    class Meta:
+        model= Post
+        fields= ['title', 'story', 'neighborhood']
