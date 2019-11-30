@@ -56,3 +56,27 @@ class Business(models.Model):
         business = cls.objects.filter(name__icontains=search_term)
         return business
 
+
+class Profile(models.Model):
+    name = models.CharField(max_length=50, null=True)
+    email = models.CharField(max_length=255)
+    user= models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    neighborhood = models.ForeignKey(Neighborhood, null=True, on_delete=models.CASCADE)
+    image = models.ImageField(default='default.png', upload_to='profile/')
+
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
+    class Meta:
+        db_table ='Profile'
+
+    @receiver(post_save, sender=User)
+    def update_create_profile(sender,instance,created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    @receiver(post_save,sender = User)
+    def save_profile(sender,instance,**kwargs):
+        instance.profile.save()
+
+
