@@ -113,3 +113,19 @@ def createhood(request):
     return render(request, 'hood.html', context)
 
 
+@login_required
+def createbusiness(request):
+    current_user = request.user
+    if request.method == 'POST':
+        business_form = BusinessForm(request.POST, request.FILES)
+        if business_form.is_valid():
+            post = business_form.save(commit=False)
+            post.user = current_user
+            post.save()
+        return redirect('/')
+    else:
+        business_form = BusinessForm()
+    context = {
+        "business_form":business_form,
+    }
+    return render(request, 'business.html', context)
