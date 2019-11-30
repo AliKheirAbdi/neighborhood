@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('home',views.home,name='home'),
-
+    path('register/', views.registration, name='register'),
 
 ]
 if settings.DEBUG:
