@@ -152,3 +152,27 @@ def get_project(request, id):
     project = Projects.objects.get(pk=id)
 
     return render(request, 'project.html', {'project':project})
+
+
+@login_required
+def search_business(request):
+    businesses = Business.objects.all()
+    if 'business' in request.GET and request.GET['business']:
+        search_term = request.GET["business"]
+        searched_business = Business.search_by_name(search_term)
+        print('*********',searched_business)
+        message = f'{search_term}'
+        context = {
+            "searched_business":searched_business,
+            "message":message,
+            "businesses":businesses,
+
+        }
+        return render(request, 'search.html', context)
+    else:
+        message = "You haven't searched for any user"
+        context = {
+            "message":message,
+        }
+        return render(request, 'search.html', context)
+
