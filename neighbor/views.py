@@ -129,3 +129,26 @@ def createbusiness(request):
         "business_form":business_form,
     }
     return render(request, 'business.html', context)
+
+
+@login_required
+def poststory(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = StoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.user = current_user
+            project.save()
+        return redirect('/')
+    else:
+        form = StoryForm()
+    context = {
+        'form':form,
+    }
+    return render(request, 'create-story.html', context)
+
+def get_project(request, id):
+    project = Projects.objects.get(pk=id)
+
+    return render(request, 'project.html', {'project':project})
