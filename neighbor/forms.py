@@ -23,7 +23,12 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['name', 'neighborhood']
 
 class StoryForm(forms.ModelForm):
-
     class Meta:
         model= Post
         fields= ['title', 'story', 'neighborhood']
+
+class NeighborhoodForm(forms.ModelForm):
+
+    class Meta:
+        model = Neighborhood
+        fields = ['name', 'location',  'occupants', 'health_department_contact', 'police_authority_contact', 'image']
