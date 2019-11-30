@@ -93,3 +93,23 @@ def updateprofile(request):
     }
 
     return render(request, 'updateprofile.html', context)
+
+
+@login_required
+def createhood(request):
+    current_user = request.user
+    if request.method == 'POST':
+        hood_form = NeighborhoodForm(request.POST, request.FILES)
+        if hood_form.is_valid():
+            post = hood_form.save(commit=False)
+            post.user = current_user
+            post.save()
+        return redirect('/')
+    else:
+        hood_form = NeighborhoodForm()
+    context = {
+        "hood_form":hood_form,
+    }
+    return render(request, 'hood.html', context)
+
+
